@@ -1,0 +1,104 @@
+[23-Sep-2025 00:08:07 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 00:08:07 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php:22
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php(22): mysqli_prepare(NULL, '\r\n  SELECT id, ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 00:08:07 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 00:08:07 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php:22
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php(22): mysqli_prepare(NULL, '\r\n  SELECT id, ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:12 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:12 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php:22
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php(22): mysqli_prepare(NULL, '\r\n  SELECT id, ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:12 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:12 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php:22
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php(22): mysqli_prepare(NULL, '\r\n  SELECT id, ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:16 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:16 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php:22
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php(22): mysqli_prepare(NULL, '\r\n  SELECT id, ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:16 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:16 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php:22
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php(22): mysqli_prepare(NULL, '\r\n  SELECT id, ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:19 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:19 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php:22
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php(22): mysqli_prepare(NULL, '\r\n  SELECT id, ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:19 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:19 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php:22
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php(22): mysqli_prepare(NULL, '\r\n  SELECT id, ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:21 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:21 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php:22
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php(22): mysqli_prepare(NULL, '\r\n  SELECT id, ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:21 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:21 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php:22
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php(22): mysqli_prepare(NULL, '\r\n  SELECT id, ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:22 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:22 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:22 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php:22
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php(22): mysqli_prepare(NULL, '\r\n  SELECT id, ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:22 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php:22
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php(22): mysqli_prepare(NULL, '\r\n  SELECT id, ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:25 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:25 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:25 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php:22
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php(22): mysqli_prepare(NULL, '\r\n  SELECT id, ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:25 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php:22
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php(22): mysqli_prepare(NULL, '\r\n  SELECT id, ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:33 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:33 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php:22
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php(22): mysqli_prepare(NULL, '\r\n  SELECT id, ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:33 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:46:33 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php:22
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php(22): mysqli_prepare(NULL, '\r\n  SELECT id, ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\loadHistory.php on line 22
+[23-Sep-2025 13:47:08 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "_DIR" in C:\xampp\htdocs\www\tripmasterv01\public\get_story_by_id.php:20
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\get_story_by_id.php on line 20
+[23-Sep-2025 13:47:14 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "_DIR" in C:\xampp\htdocs\www\tripmasterv01\public\get_story_by_id.php:20
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\get_story_by_id.php on line 20

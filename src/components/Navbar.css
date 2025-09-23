@@ -1,0 +1,114 @@
+nav{
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    background-color: #ffffff;
+}
+nav ul{
+    list-style-type: none;
+    display: flex;
+    padding:0;
+    margin:0;
+}
+nav ul li a{
+    color: black;
+    display: block;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+nav ul li a:hover{
+   text-decoration: none;
+   transform: scale(1.4);
+
+}
+.nav-logoutButton , .nav-loginLink{
+    font-size: 40px;
+    cursor:pointer;
+}
+ 
+.nav-right{
+    display:flex;
+    align-items: center;
+}
+
+
+h1{
+    display: block;
+    padding: 14px 20px;
+    color: rgb(72, 35, 114);
+    text-decoration: none;
+    margin: center;
+    text-align: center;
+
+}
+.myIcons{
+    font-size: 50px;
+}
+.myLogOut{
+    cursor: pointer;
+    
+    font-size: 50px;
+    color: brown;
+}
+.nav-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+.logout-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    margin: 0;
+
+  }
+  .logout-button:hover .myLogOut {
+    color: red; /* בצבע אדום כאשר מעבירים עכבר */
+    transform: scale(1.2); /* הגדלה קטנה */
+  }
+@media (max-width: 900px) {
+    nav {
+        padding: 10px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: center;
+    }
+    nav ul {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    nav ul li a {
+        font-size: 16px;
+        padding: 10px 12px;
+    }
+    .nav-logoutButton, .nav-loginLink, .myIcons, .myLogOut {
+        font-size: 40px; /* Make icons large */
+        padding: 0 8px;
+    }
+    h1 {
+        font-size: 20px;
+        padding: 10px 12px;
+        margin: 0;
+        text-align: center;
+    }
+    .nav-center {
+        flex: 1;
+        justify-content: center;
+        align-items: center;
+    }
+    .nav-right {
+        flex: none;
+        align-items: center;
+    }
+    .logout-button {
+        padding: 6px;
+    }
+}
