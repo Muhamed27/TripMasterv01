@@ -1,82 +1,68 @@
 <?php
-// يُرجع قائمة خطط المستخدم كمصفوفة JSON مباشرة ([] عند عدم وجود بيانات).
-// فيه وضع تصحيح اختياري: ?debug=1 يطبع تفاصيل نصيّة تساعدك تعرف وين المشكلة.
+// نسخة مبسطة جدًا: تطبع نص واضح عند الخطأ، و JSON عند النجاح.
+// لو فتحت بالرابط مع ?debug=1 هتظهر رسائل الخطأ كنص.
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
+$debug = isset($_GET['debug']) && $_GET['debug'] == '1';
+if ($debug) {
+  ini_set('display_errors', '1');
+  error_reporting(E_ALL);
+  header('Content-Type: text/plain; charset=utf-8');
+} else {
+  header('Content-Type: application/json; charset=utf-8');
+}
 
-header("Content-Type: application/json; charset=utf-8");
-ini_set('display_errors', '0');
-error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+// جرّب تضمين db.php
+$path = __DIR__ . '/db.php';
+if (!file_exists($path)) {
+  echo $debug ? "MISSING FILE: public/db.php\n" : "[]";
+  exit;
+}
+require $path;
 
-require_once __DIR__ . "/db.php";
-if (!isset($con) || !$con) { echo "[]"; exit; }
+// تأكد أن الاتصال موجود
+if (!isset($con) || !$con) {
+  echo $debug ? "NO \$con from db.php (mysqli connection not set)\n" : "[]";
+  exit;
+}
 
-mysqli_set_charset($con, "utf8mb4");
+// ترميز
+mysqli_set_charset($con, 'utf8mb4');
 
-// اقرأ uid بأي اسم شائع:
+// إقرأ uid بأي مفتاح شائع
 $uid = '';
 foreach (['uid','userid','userId'] as $k) {
   if (!empty($_GET[$k])) { $uid = trim($_GET[$k]); break; }
   if (!empty($_POST[$k])) { $uid = trim($_POST[$k]); break; }
 }
-if ($uid === '') { echo "[]"; exit; }
+if ($uid === '') {
+  echo $debug ? "MISSING UID\n" : "[]";
+  exit;
+}
 
 $uidEsc = mysqli_real_escape_string($con, $uid);
 
-$sql = "SELECT
-          id, userid, titlePlan, startDate, endDate,
-          smartDailyPlans, places, dailyHours,
-          eventCalender, isActive, isShared, id_Shared_Trip, status
+// الاستعلام
+$sql = "SELECT id, titlePlan, startDate, endDate, eventCalender, status
         FROM dashboard
         WHERE userid = '$uidEsc'
         ORDER BY id DESC
         LIMIT 200";
 
 $res = mysqli_query($con, $sql);
-
 if (!$res) {
-  if (isset($_GET['debug'])) {
-    header("Content-Type: text/plain; charset=utf-8");
-    $db = mysqli_fetch_assoc(mysqli_query($con, "SELECT DATABASE() db"))['db'] ?? '(unknown)';
-    echo "SQL ERROR: " . mysqli_error($con) . "\n";
-    echo "DB: $db\n";
-    echo "SQL: $sql\n";
-  } else {
-    echo "[]";
-  }
+  echo $debug ? ("SQL ERROR: " . mysqli_error($con) . "\nSQL: $sql\n") : "[]";
   exit;
 }
 
+// بناء الخرج
 $out = [];
-while ($row = mysqli_fetch_assoc($res)) {
-  $out[] = [
-    'id'              => (int)$row['id'],
-    'userid'          => (string)$row['userid'],
-    'titlePlan'       => (string)$row['titlePlan'],
-    'startDate'       => (string)$row['startDate'],
-    'endDate'         => (string)$row['endDate'],
-    'smartDailyPlans' => (string)$row['smartDailyPlans'],
-    'places'          => (string)$row['places'],
-    'dailyHours'      => (string)$row['dailyHours'],
-    // نخليها نص JSON كما هي (أو [] لو فاضية) — الداش القديم يتوقعها هيك
-    'eventCalender'   => ($row['eventCalender'] !== null && $row['eventCalender'] !== '' ? (string)$row['eventCalender'] : '[]'),
-    'isActive'        => (string)$row['isActive'],
-    'isShared'        => (string)$row['isShared'],
-    'id_Shared_Trip'  => ($row['id_Shared_Trip'] !== null ? (int)$row['id_Shared_Trip'] : null),
-    'status'          => (string)$row['status'],
-  ];
+while ($r = mysqli_fetch_assoc($res)) {
+  $r['id'] = (int)$r['id'];
+  // نخلي eventCalender نص JSON كما هو أو "[]"
+  $r['eventCalender'] = ($r['eventCalender'] !== null && $r['eventCalender'] !== '') ? $r['eventCalender'] : '[]';
+  $out[] = $r;
 }
 
-if (isset($_GET['debug'])) {
-  header("Content-Type: text/plain; charset=utf-8");
-  $db = mysqli_fetch_assoc(mysqli_query($con, "SELECT DATABASE() db"))['db'] ?? '(unknown)';
-  echo "DB: $db\n";
-  echo "UID: $uid\n";
-  echo "Rows: " . count($out) . "\n";
-  echo json_encode($out, JSON_UNESCAPED_UNICODE);
-} else {
-  echo json_encode($out, JSON_UNESCAPED_UNICODE);
-}
+echo $debug
+  ? json_encode($out, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)
+  : json_encode($out, JSON_UNESCAPED_UNICODE);
