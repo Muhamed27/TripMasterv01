@@ -1,19 +1,15 @@
 <?php
-// loadHistory.php  — نسخة تشخيصية ترجع JSON حتى لو صار خطأ
 
-// السماح من localhost فقط (يفي بالغرض محلياً)
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
 
-// حوّل أي Warning/Notice إلى Exception حتى ما يصير 500 صامت
 set_error_handler(function($no,$str,$file,$line){
   throw new ErrorException($str, 0, $no, $file, $line);
 });
 set_exception_handler(function($e){
-  // لا تُرجع 500؛ أعطِ JSON واضح بدلها
   http_response_code(200);
   echo json_encode([
     'ok'    => false,
@@ -27,16 +23,12 @@ set_exception_handler(function($e){
 function ok($arr = []) { echo json_encode(['ok'=>true] + $arr, JSON_UNESCAPED_UNICODE); exit; }
 function jtry($v){ if(is_array($v)) return $v; $d=json_decode((string)$v,true); return is_array($d)?$d:[]; }
 
-// 1) احصل على الـ UID من GET/POST/JSON
 $raw = file_get_contents('php://input') ?: '';
 $body = json_decode($raw, true) ?: [];
 $uid = trim($_GET['uid'] ?? $_POST['uid'] ?? $_POST['userid'] ?? $body['uid'] ?? $body['userid'] ?? '');
 
-// إن لم يصل UID أعِد قائمة فاضية (بدون 400)
 if ($uid === '') ok(['items'=>[]]);
 
-// 2) اجلب اتصال قاعدة البيانات
-// حاول تلقائياً عدة مسارات شائعة
 $con = null;
 $root = dirname(__DIR__);
 $try = [
@@ -51,14 +43,10 @@ foreach ($try as $p) {
   if (file_exists($p)) { require $p; break; }
 }
 
-// إن لم يعرّف ملف db.php المتغير $con جرّب اتصال يدوي
 if (!isset($con) || !$con) {
-  // عدّل هذه القيم لو لزم
   $con = @mysqli_connect('127.0.0.1','root','','tripmaster');
 }
 if (!$con) throw new Exception('DB connect failed: '.mysqli_connect_error());
-
-// 3) نفّذ الاستعلام
 $sql = "SELECT id, dashid, userid, titlePlan, startDate, endDate, rating, notes, images, isActive
         FROM historydashboardtrips
         WHERE userid = ?

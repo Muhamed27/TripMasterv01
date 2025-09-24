@@ -3,7 +3,6 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../fire";
 import "./DahsBulltin.css";
 
-// أعلى الملف، بعد الـimports
 const API_BASE =
   window.__API_BASE__ ||
   localStorage.getItem("apiBase") ||

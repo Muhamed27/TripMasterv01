@@ -1,6 +1,5 @@
 # path: public/get_plan_details.php
 <?php
-// ===== CORS + JSON + إخفاء التحذيرات على الشاشة =====
 $allowed = [
   'http://localhost:3000',
   'http://127.0.0.1:3000',
@@ -11,7 +10,7 @@ $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 if (in_array($origin, $allowed, true)) {
   header("Access-Control-Allow-Origin: $origin");
 } else {
-  header("Access-Control-Allow-Origin: *"); // للـ Dev فقط
+  header("Access-Control-Allow-Origin: *"); 
 }
 header("Vary: Origin");
 header("Access-Control-Allow-Credentials: true");
@@ -27,8 +26,6 @@ header("Content-Type: application/json; charset=utf-8");
 ini_set('display_errors', '0');
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
-// ملاحظة مهمّة: أي echo/print/r var_dump قبل json_encode سيكسر JSON.
-// للتصحيح استعمل error_log() بدل echo.
 /* 
   פרטי תכנית (פירוט מלא) — תאימות ללקוחות קיימים
   קלט GET: id

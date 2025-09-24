@@ -1,5 +1,5 @@
 <?php
-// نسخة مطابقة تقريباً لـ loadtodashboard.php، ترجع نفس الحقول كنصوص JSON
+// loadtodashboard.php، ترجع نفس الحقول كنصوص JSON
 $allowed = ['http://localhost:3000','http://127.0.0.1:3000','http://localhost:8012','http://127.0.0.1:8012'];
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 header('Vary: Origin');

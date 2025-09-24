@@ -27,8 +27,7 @@ header("Content-Type: application/json; charset=utf-8");
 ini_set('display_errors', '0');
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
-// ملاحظة مهمّة: أي echo/print/r var_dump قبل json_encode سيكسر JSON.
-// للتصحيح استعمل error_log() بدل echo.
+
 /* 
   פרטי תכנית לפי מזהה
   קלט GET: id
