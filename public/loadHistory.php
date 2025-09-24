@@ -1,61 +1,90 @@
-# path: public/loadHistory.php
 <?php
-// ===== CORS + JSON + إخفاء التحذيرات على الشاشة =====
-$allowed = [
-  'http://localhost:3000',
-  'http://127.0.0.1:3000',
-  'http://localhost:8012',
-  'http://127.0.0.1:8012'
-];
-$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-if (in_array($origin, $allowed, true)) {
-  header("Access-Control-Allow-Origin: $origin");
-} else {
-  header("Access-Control-Allow-Origin: *"); // للـ Dev فقط
-}
-header("Vary: Origin");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+// loadHistory.php  — نسخة تشخيصية ترجع JSON حتى لو صار خطأ
 
-// ردّ الـPreflight مباشرةً
+// السماح من localhost فقط (يفي بالغرض محلياً)
+header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
 
-header("Content-Type: application/json; charset=utf-8");
-
-// لا نطبع تحذيرات HTML داخل الرد JSON
-ini_set('display_errors', '0');
-error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
-
-// ملاحظة مهمّة: أي echo/print/r var_dump قبل json_encode سيكسر JSON.
-// للتصحيح استعمل error_log() بدل echo.
-/* 
-  מחזיר נסיעות שהסתיימו עבור משתמש (לשונית History)
-  קלט (POST): uid
-  יציאה: מערך פריטים עם: id, titlePlan, eventCalender, images, startDate, endDate
-  הערה: משתמש בטבלת plans (התאם לשם הטבלה אם אצלך אחרת)
-*/
-require __DIR__.'/db.php';
-
-$uid = trim($_POST['uid'] ?? '');
-if ($uid === '') json_ok([]); // ריק עדיף על שגיאה ב־UI
-
-try {
-  $sql = "SELECT id, titlePlan, eventCalender, images, startDate, endDate
-          FROM plans
-          WHERE user_id = ? AND (endDate IS NOT NULL AND endDate < CURDATE())
-          ORDER BY endDate DESC";
-  $stmt = pdo()->prepare($sql);
-  $stmt->execute([$uid]);
-  $rows = $stmt->fetchAll();
-  foreach ($rows as &$r) {
-    $r['eventCalender'] = safe_json_array($r['eventCalender']);
-    $r['images'] = safe_json_array($r['images']);
-  }
-  echo json_encode($rows, JSON_UNESCAPED_UNICODE);
+// حوّل أي Warning/Notice إلى Exception حتى ما يصير 500 صامت
+set_error_handler(function($no,$str,$file,$line){
+  throw new ErrorException($str, 0, $no, $file, $line);
+});
+set_exception_handler(function($e){
+  // لا تُرجع 500؛ أعطِ JSON واضح بدلها
+  http_response_code(200);
+  echo json_encode([
+    'ok'    => false,
+    'error' => $e->getMessage(),
+    'at'    => basename($e->getFile()).':'.$e->getLine()
+  ], JSON_UNESCAPED_UNICODE);
   exit;
-} catch (Throwable $e) {
-  // אם הטבלה/עמודות שונות — החזר ריק במקום להפיל את ה־UI
-  echo json_encode([], JSON_UNESCAPED_UNICODE);
-  exit;
+});
+
+// helpers
+function ok($arr = []) { echo json_encode(['ok'=>true] + $arr, JSON_UNESCAPED_UNICODE); exit; }
+function jtry($v){ if(is_array($v)) return $v; $d=json_decode((string)$v,true); return is_array($d)?$d:[]; }
+
+// 1) احصل على الـ UID من GET/POST/JSON
+$raw = file_get_contents('php://input') ?: '';
+$body = json_decode($raw, true) ?: [];
+$uid = trim($_GET['uid'] ?? $_POST['uid'] ?? $_POST['userid'] ?? $body['uid'] ?? $body['userid'] ?? '');
+
+// إن لم يصل UID أعِد قائمة فاضية (بدون 400)
+if ($uid === '') ok(['items'=>[]]);
+
+// 2) اجلب اتصال قاعدة البيانات
+// حاول تلقائياً عدة مسارات شائعة
+$con = null;
+$root = dirname(__DIR__);
+$try = [
+  __DIR__.'/db.php',
+  $root.'/db.php',
+  $root.'/config/db.php',
+  $root.'/inc/db.php',
+  $root.'/includes/db.php',
+  $root.'/router/db.php'
+];
+foreach ($try as $p) {
+  if (file_exists($p)) { require $p; break; }
 }
+
+// إن لم يعرّف ملف db.php المتغير $con جرّب اتصال يدوي
+if (!isset($con) || !$con) {
+  // عدّل هذه القيم لو لزم
+  $con = @mysqli_connect('127.0.0.1','root','','tripmaster');
+}
+if (!$con) throw new Exception('DB connect failed: '.mysqli_connect_error());
+
+// 3) نفّذ الاستعلام
+$sql = "SELECT id, dashid, userid, titlePlan, startDate, endDate, rating, notes, images, isActive
+        FROM historydashboardtrips
+        WHERE userid = ?
+        ORDER BY id DESC
+        LIMIT 50";
+$stmt = mysqli_prepare($con, $sql);
+if (!$stmt) throw new Exception('DB prepare failed');
+
+mysqli_stmt_bind_param($stmt, 's', $uid);
+mysqli_stmt_execute($stmt);
+$res = mysqli_stmt_get_result($stmt);
+
+$items = [];
+while ($row = mysqli_fetch_assoc($res)) {
+  $items[] = [
+    'id'         => (int)$row['id'],
+    'dashid'     => (int)$row['dashid'],
+    'user_id'    => $row['userid'],
+    'title'      => $row['titlePlan'],
+    'start_date' => $row['startDate'],
+    'end_date'   => $row['endDate'],
+    'rating'     => (int)$row['rating'],
+    'notes'      => $row['notes'],
+    'images'     => jtry($row['images']),
+    'is_active'  => (int)$row['isActive'],
+  ];
+}
+
+ok(['items'=>$items]);

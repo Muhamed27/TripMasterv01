@@ -102,3 +102,58 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in C:\xampp\htdocs\www\tripmasterv01\public\get_story_by_id.php on line 20
+[23-Sep-2025 23:37:59 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'eventCalender' in 'field list' in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php:95
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php(95): mysqli_prepare(Object(mysqli), 'SELECT eventCal...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php on line 95
+[23-Sep-2025 23:38:06 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'eventCalender' in 'field list' in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php:95
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php(95): mysqli_prepare(Object(mysqli), 'SELECT eventCal...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php on line 95
+[23-Sep-2025 23:45:11 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'eventCalender' in 'field list' in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php:95
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php(95): mysqli_prepare(Object(mysqli), 'SELECT eventCal...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php on line 95
+[23-Sep-2025 23:45:26 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'eventCalender' in 'field list' in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php:95
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php(95): mysqli_prepare(Object(mysqli), 'SELECT eventCal...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php on line 95
+[23-Sep-2025 23:45:39 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'eventCalender' in 'field list' in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php:95
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php(95): mysqli_prepare(Object(mysqli), 'SELECT eventCal...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php on line 95
+[23-Sep-2025 23:46:04 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'eventCalender' in 'field list' in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php:95
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php(95): mysqli_prepare(Object(mysqli), 'SELECT eventCal...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php on line 95
+[23-Sep-2025 23:51:58 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'eventCalender' in 'field list' in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php:95
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php(95): mysqli_prepare(Object(mysqli), 'SELECT eventCal...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php on line 95
+[23-Sep-2025 23:52:10 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'eventCalender' in 'field list' in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php:95
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php(95): mysqli_prepare(Object(mysqli), 'SELECT eventCal...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php on line 95
+[23-Sep-2025 23:52:21 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'eventCalender' in 'field list' in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php:95
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php(95): mysqli_prepare(Object(mysqli), 'SELECT eventCal...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php on line 95
+[23-Sep-2025 23:52:30 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'eventCalender' in 'field list' in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php:95
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php(95): mysqli_prepare(Object(mysqli), 'SELECT eventCal...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php on line 95
+[23-Sep-2025 23:52:38 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'eventCalender' in 'field list' in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php:95
+Stack trace:
+#0 C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php(95): mysqli_prepare(Object(mysqli), 'SELECT eventCal...')
+#1 {main}
+  thrown in C:\xampp\htdocs\www\tripmasterv01\public\clone_plan.php on line 95

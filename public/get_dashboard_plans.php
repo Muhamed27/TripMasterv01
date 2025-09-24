@@ -1,68 +1,72 @@
 <?php
-// نسخة مبسطة جدًا: تطبع نص واضح عند الخطأ، و JSON عند النجاح.
-// لو فتحت بالرابط مع ?debug=1 هتظهر رسائل الخطأ كنص.
+// نسخة مطابقة تقريباً لـ loadtodashboard.php، ترجع نفس الحقول كنصوص JSON
+$allowed = ['http://localhost:3000','http://127.0.0.1:3000','http://localhost:8012','http://127.0.0.1:8012'];
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+header('Vary: Origin');
+if (in_array($origin, $allowed, true)) header("Access-Control-Allow-Origin: $origin");
+else header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
 
-$debug = isset($_GET['debug']) && $_GET['debug'] == '1';
-if ($debug) {
-  ini_set('display_errors', '1');
-  error_reporting(E_ALL);
-  header('Content-Type: text/plain; charset=utf-8');
-} else {
-  header('Content-Type: application/json; charset=utf-8');
-}
+$debug = isset($_GET['debug']) ? (int)$_GET['debug'] : 0;
+ini_set('display_errors', $debug ? '1' : '0');
+error_reporting($debug ? E_ALL : (E_ALL & ~E_NOTICE & ~E_WARNING));
+header("Content-Type: application/json; charset=utf-8");
 
-// جرّب تضمين db.php
-$path = __DIR__ . '/db.php';
-if (!file_exists($path)) {
-  echo $debug ? "MISSING FILE: public/db.php\n" : "[]";
-  exit;
-}
-require $path;
+require_once __DIR__ . "/db.php";
+mysqli_set_charset($con, "utf8mb4");
 
-// تأكد أن الاتصال موجود
-if (!isset($con) || !$con) {
-  echo $debug ? "NO \$con from db.php (mysqli connection not set)\n" : "[]";
-  exit;
-}
-
-// ترميز
-mysqli_set_charset($con, 'utf8mb4');
-
-// إقرأ uid بأي مفتاح شائع
+// uid
+$raw = file_get_contents("php://input");
+$body = $raw ? json_decode($raw, true) : [];
 $uid = '';
-foreach (['uid','userid','userId'] as $k) {
-  if (!empty($_GET[$k])) { $uid = trim($_GET[$k]); break; }
-  if (!empty($_POST[$k])) { $uid = trim($_POST[$k]); break; }
-}
-if ($uid === '') {
-  echo $debug ? "MISSING UID\n" : "[]";
-  exit;
-}
+$uid = $_POST['uid']    ?? $uid;
+$uid = $_POST['userId'] ?? $uid;
+$uid = $_GET['uid']     ?? $uid;
+$uid = $body['uid']     ?? $uid;
+$uid = $body['userId']  ?? $uid;
+$uid = trim((string)$uid);
+if ($uid === '') { echo "[]"; exit; }
 
 $uidEsc = mysqli_real_escape_string($con, $uid);
+$sql = "
+SELECT id, userid, titlePlan, startDate, endDate,
+       places, smartDailyPlans, dailyHours, eventCalender, startloc, status
+FROM dashboard
+WHERE REPLACE(REPLACE(REPLACE(TRIM(userid), CHAR(9), ''), CHAR(10), ''), CHAR(13), '') =
+      REPLACE(REPLACE(REPLACE(TRIM('$uidEsc'), CHAR(9), ''), CHAR(10), ''), CHAR(13), '')
+ORDER BY id DESC
+LIMIT 200";
 
-// الاستعلام
-$sql = "SELECT id, titlePlan, startDate, endDate, eventCalender, status
-        FROM dashboard
-        WHERE userid = '$uidEsc'
-        ORDER BY id DESC
-        LIMIT 200";
-
-$res = mysqli_query($con, $sql);
-if (!$res) {
-  echo $debug ? ("SQL ERROR: " . mysqli_error($con) . "\nSQL: $sql\n") : "[]";
-  exit;
-}
-
-// بناء الخرج
 $out = [];
-while ($r = mysqli_fetch_assoc($res)) {
-  $r['id'] = (int)$r['id'];
-  // نخلي eventCalender نص JSON كما هو أو "[]"
-  $r['eventCalender'] = ($r['eventCalender'] !== null && $r['eventCalender'] !== '') ? $r['eventCalender'] : '[]';
-  $out[] = $r;
-}
+try {
+  $res = mysqli_query($con, $sql);
+  if (!$res) throw new Exception(mysqli_error($con));
+  while ($r = mysqli_fetch_assoc($res)) {
+    $places          = ($r['places']          === null || $r['places']          === '') ? '[]' : $r['places'];
+    $smartDailyPlans = ($r['smartDailyPlans'] === null || $r['smartDailyPlans'] === '') ? '[]' : $r['smartDailyPlans'];
+    $dailyHours      = ($r['dailyHours']      === null || $r['dailyHours']      === '') ? '[]' : $r['dailyHours'];
+    $eventCalender   = ($r['eventCalender']   === null || $r['eventCalender']   === '') ? '[]' : $r['eventCalender'];
+    $startloc        = ($r['startloc']        === null || $r['startloc']        === '') ? '{"lat":0,"lng":0}' : $r['startloc'];
 
-echo $debug
-  ? json_encode($out, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)
-  : json_encode($out, JSON_UNESCAPED_UNICODE);
+    $out[] = [
+      "id"             => (int)$r['id'],
+      "userid"         => (string)$r['userid'],
+      "titlePlan"      => (string)$r['titlePlan'],
+      "startDate"      => (string)$r['startDate'],
+      "endDate"        => (string)$r['endDate'],
+      "places"         => (string)$places,
+      "smartDailyPlans"=> (string)$smartDailyPlans,
+      "dailyHours"     => (string)$dailyHours,
+      "eventCalender"  => (string)$eventCalender,
+      "startloc"       => (string)$startloc,
+      "status"         => (string)$r['status'],
+    ];
+  }
+  echo json_encode($out, JSON_UNESCAPED_UNICODE);
+} catch (Throwable $e) {
+  if ($debug) echo json_encode(["ok"=>false,"error"=>$e->getMessage()]);
+  else echo "[]";
+}
